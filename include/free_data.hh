@@ -39,10 +39,9 @@ public:
   ~free_data();
   free_data();
 
-  void acknowledge_notifications(const std::vector<notifications>& notifs);
-
-  notifications retrieve_notifications(const data_source& source);
-  subscriptions retrieve_subscriptions(const data_source& source);
+  void acknowledge_notifications(const std::vector<notification>& notifs);
+  notification retrieve_notifications(const data_source& source);
+  subscription retrieve_subscriptions(const data_source& source);
 
   void subscribe(const data_source& source);
   void unsubscribe();

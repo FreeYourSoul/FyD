@@ -21,8 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "twitch.hh"
+#include <data_types.hh/twitch.hh>
 
-namespace fyd {
+namespace fyd::source {
 
 }

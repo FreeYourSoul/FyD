@@ -28,13 +28,13 @@
 
 namespace fyd {
 
-class twitter_source;
-class youtube_source;
+class twitter;
+class youtube;
 class twitch_source;
 
 using data_source = std::variant<
-	twitter_source,
-	youtube_source,
+	twitter,
+	youtube,
 	twitch_source>;
 
 enum sub_type {
@@ -43,7 +43,7 @@ enum sub_type {
   TWITCH
 };
 
-struct subscriptions {
+struct subscription {
   sub_type type;
   std::string uri_feed;
 
@@ -51,7 +51,7 @@ struct subscriptions {
   std::vector<std::string> notif_filter_regex;
 };
 
-struct notifications {
+struct notification {
   std::string name;
   std::string uri_image;
   std::string uri_hyperlink;

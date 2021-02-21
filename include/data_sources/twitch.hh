@@ -24,7 +24,7 @@
 #ifndef FYD_INCLUDE_DATA_SOURCES_TWITCH_HH
 #define FYD_INCLUDE_DATA_SOURCES_TWITCH_HH
 
-namespace fyd {
+namespace fyd::source {
 
 class twitch {
 };

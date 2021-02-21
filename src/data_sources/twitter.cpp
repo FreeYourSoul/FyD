@@ -21,8 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "twitter_source.hh"
+#include <data_types.hh/twitter.hh>
 
-namespace fyd {
+namespace fyd::source {
 
 }

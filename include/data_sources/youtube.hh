@@ -21,14 +21,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef FYD_INCLUDE_DATA_SOURCES_TWITTER_SOURCE_HH
-#define FYD_INCLUDE_DATA_SOURCES_TWITTER_SOURCE_HH
+#ifndef FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH
+#define FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH
 
-namespace fyd {
+#include <memory>
+#include <data_types.hh>
 
-class twitter_source {
+namespace fyd::source {
+
+class youtube {
+
+  struct internal;
+
+public:
+  ~youtube();
+
+  std::vector<notification> trigger_notifications();
+
+  [[nodiscard]] std::string key_subscription_list() const;
+  [[nodiscard]] std::string key_subscription_user(const std::string& user) const;
+
+private:
+  std::unique_ptr<internal> _impl;
 };
 
 }
 
-#endif//FYD_INCLUDE_DATA_SOURCES_TWITTER_SOURCE_HH
+#endif//FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH

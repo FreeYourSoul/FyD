@@ -26,16 +26,18 @@
 #include <fmt/format.h>
 
 #include "data_types.hh"
-#include "youtube_source.hh"
+#include <data_sources/youtube.hh>
 
 constexpr auto YOUTUBE_URI = "https://socialblade.com/youtube";
 constexpr auto USER_NAME_POSTFIX = "user/{}/videos";
 
-namespace fyd {
+constexpr auto REFRESH_NOTIF_RATE = std::chrono::seconds(10);
+
+namespace fyd::source {
 
 namespace {
 std::chrono::system_clock convert_to_clock(const std::string& str) {
-  return {}
+  return {};
 }
 }
 
@@ -43,9 +45,18 @@ struct internal {
   std::chrono::system_clock last_timer;
 };
 
-std::optional<notification> trigger_notification() {
+youtube::~youtube() = default;
 
+std::vector<notification> youtube::trigger_notifications() {
   return {};
+}
+
+std::string youtube::key_subscription_list() const {
+  return "fyd#subscription#";
+}
+
+std::string youtube::key_subscription_user(const std::string& user) const {
+  return fmt::format(FMT_STRING("{}{}"), key_subscription_list(), user);
 }
 
 }
