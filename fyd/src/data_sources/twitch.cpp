@@ -21,7 +21,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <data_types.hh/twitter.hh>
+#include <data_sources/twitch.hh>
 
 namespace fyd::source {
 

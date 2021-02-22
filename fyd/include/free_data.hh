@@ -21,42 +21,35 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef FYD_INCLUDE_DATA_TYPES_HH
-#define FYD_INCLUDE_DATA_TYPES_HH
+#ifndef FYD_SRC_FREE_DATA_HH
+#define FYD_SRC_FREE_DATA_HH
 
-#include <variant>
+#include <vector>
+
+#include <data_types.hh>
 
 namespace fyd {
 
-class twitter;
-class youtube;
-class twitch_source;
+class free_data {
 
-using data_source = std::variant<
-	twitter,
-	youtube,
-	twitch_source>;
+  struct internal;
 
-enum sub_type {
-  YOUTUBE,
-  TWITTER,
-  TWITCH
-};
+public:
+  ~free_data();
+  free_data();
 
-struct subscription {
-  sub_type type;
-  std::string uri_feed;
+  void acknowledge_notifications(const std::vector<notification>& notifs);
+  notification retrieve_notifications();
+  subscription retrieve_subscriptions();
 
-  //! possibility to filter the subscription to not receive notifications from certain type of input
-  std::vector<std::string> notif_filter_regex;
-};
+  void subscribe(const subscription& sub);
+  void unsubscribe(const std::string& user);
 
-struct notification {
-  std::string name;
-  std::string uri_image;
-  std::string uri_hyperlink;
+private:
+  std::unique_ptr<internal> _impl;
+
 };
 
 }
 
-#endif//FYD_INCLUDE_DATA_TYPES_HH
+#endif//FYD_SRC_FREE_DATA_HH

@@ -21,42 +21,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <chrono>
+#ifndef FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH
+#define FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH
 
-#include <fmt/format.h>
+#include <memory>
 
-#include "data_types.hh"
-#include <data_sources/youtube.hh>
-
-constexpr auto YOUTUBE_URI = "https://socialblade.com/youtube";
-constexpr auto USER_NAME_POSTFIX = "user/{}/videos";
-
-constexpr auto REFRESH_NOTIF_RATE = std::chrono::seconds(10);
+#include <data_types.hh>
+#include <free_data.hh>
 
 namespace fyd::source {
 
-namespace {
-std::chrono::system_clock convert_to_clock(const std::string& str) {
-  return {};
-}
-}
+class youtube {
 
-struct internal {
+  struct internal;
+
+public:
+  ~youtube();
+  youtube();
+
+  std::vector<notification> trigger_notifications();
+
+  [[nodiscard]] std::string key_subscription_list() const;
+  [[nodiscard]] std::string key_subscription_user(const std::string& user) const;
+
+private:
   std::chrono::system_clock last_timer;
+
 };
 
-youtube::~youtube() = default;
-
-std::vector<notification> youtube::trigger_notifications() {
-  return {};
 }
 
-std::string youtube::key_subscription_list() const {
-  return "fyd#subscription#";
-}
-
-std::string youtube::key_subscription_user(const std::string& user) const {
-  return fmt::format(FMT_STRING("{}{}"), key_subscription_list(), user);
-}
-
-}
+#endif//FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH

@@ -21,18 +21,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <fil/kv_db/kv_rocksdb.hh>
+#include <chrono>
+#include <memory>
 
-#include "free_data.hh"
+#include <fmt/format.h>
 
-namespace fyd {
+#include <data_types.hh>
+#include <data_sources/youtube.hh>
 
-struct internal {
-  fil::kv_rocksdb_type db;
-};
+constexpr auto YOUTUBE_URI = "https://socialblade.com/youtube";
+constexpr auto USER_NAME_POSTFIX = "user/{}/videos";
 
-free_data::~free_data() = default;
+constexpr auto REFRESH_NOTIF_RATE = std::chrono::seconds(10);
 
-free_data::free_data() {}
+namespace fyd::source {
+
+namespace {
+std::chrono::system_clock convert_to_clock(const std::string& str) {
+  return {};
+}
+}
+
+
+youtube::~youtube() = default;
+
+youtube::youtube() {
+}
+
+std::vector<notification> youtube::trigger_notifications() {
+  return {};
+}
+
+std::string youtube::key_subscription_list() const {
+  return fmt::format(FMT_STRING("{}#youtube"), key_subscriptions());
+}
+
+std::string youtube::key_subscription_user(const std::string& user) const {
+  return fmt::format(FMT_STRING("{}#{}"), key_subscription_list(), user);
+}
 
 }

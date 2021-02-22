@@ -21,36 +21,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef FYD_SRC_FREE_DATA_HH
-#define FYD_SRC_FREE_DATA_HH
+#include <memory>
 
-#include <vector>
+#include <fil/kv_db/kv_rocksdb.hh>
 
-#include <data_types.hh>
-#include <data_sources/data_source.hh>
+#include <data_sources/twitch.hh>
+#include <data_sources/twitter.hh>
+#include <data_sources/youtube.hh>
+
+#include "free_data.hh"
 
 namespace fyd {
 
-class free_data {
+using data_source = std::variant<
+	fyd::source::twitter,
+	fyd::source::youtube,
+	fyd::source::twitch>;
 
-  struct internal;
+struct free_data::internal {
+  explicit internal(const std::string &path_db)
+	  : db(fil::kv_rocksdb::initializer_type{path_db}),
+		s({fyd::source::youtube(),
+		   fyd::source::twitter(),
+		   fyd::source::twitch()}) {
+  }
 
-public:
-  ~free_data();
-  free_data();
+  fil::kv_rocksdb_type db;
 
-  void acknowledge_notifications(const std::vector<notification>& notifs);
-  notification retrieve_notifications(const data_source& source);
-  subscription retrieve_subscriptions(const data_source& source);
-
-  void subscribe(const data_source& source);
-  void unsubscribe();
-
-private:
-  std::unique_ptr<internal> _impl;
-
+  std::vector<data_source> s;
 };
 
+free_data::~free_data() = default;
+
+free_data::free_data() : _impl(std::make_unique<free_data::internal>("")) {}
+
+void free_data::acknowledge_notifications(const std::vector<notification> &notifs) {
 }
 
-#endif//FYD_SRC_FREE_DATA_HH
+notification free_data::retrieve_notifications() {
+  return notification();
+}
+
+subscription free_data::retrieve_subscriptions() {
+  return subscription();
+}
+
+void free_data::subscribe(const subscription &sub) {
+}
+
+void free_data::unsubscribe(const std::string &user) {
+}
+
+}// namespace fyd

@@ -21,14 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef FYD_INCLUDE_DATA_SOURCES_TWITTER_SOURCE_HH
-#define FYD_INCLUDE_DATA_SOURCES_TWITTER_SOURCE_HH
+#include <data_sources/twitter.hh>
 
 namespace fyd::source {
 
-class twitter_source {
-};
-
 }
-
-#endif//FYD_INCLUDE_DATA_SOURCES_TWITTER_SOURCE_HH

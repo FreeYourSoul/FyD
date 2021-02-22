@@ -21,30 +21,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH
-#define FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH
+#ifndef FYD_INCLUDE_DATA_TYPES_HH
+#define FYD_INCLUDE_DATA_TYPES_HH
 
-#include <memory>
-#include <data_types.hh>
+#include <variant>
 
-namespace fyd::source {
+namespace fyd {
 
-class youtube {
-
-  struct internal;
-
-public:
-  ~youtube();
-
-  std::vector<notification> trigger_notifications();
-
-  [[nodiscard]] std::string key_subscription_list() const;
-  [[nodiscard]] std::string key_subscription_user(const std::string& user) const;
-
-private:
-  std::unique_ptr<internal> _impl;
+enum sub_type {
+  YOUTUBE,
+  TWITTER,
+  TWITCH
 };
+
+struct subscription {
+  std::string user;
+
+  sub_type type;
+  std::string uri_feed;
+
+  //! possibility to filter the subscription to not receive notifications from certain type of input
+  std::vector<std::string> notif_filter_regex;
+};
+
+struct notification {
+  std::string name;
+  std::string uri_image;
+  std::string uri_hyperlink;
+
+  sub_type type;
+};
+
+[[nodiscard]] std::string key_subscriptions() {
+  return "fyd#subscriptions";
+}
+
+[[nodiscard]] std::string key_notifications() {
+  return "fyd#notifications";
+}
 
 }
 
-#endif//FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH
+#endif//FYD_INCLUDE_DATA_TYPES_HH
