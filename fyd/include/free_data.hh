@@ -1,7 +1,7 @@
 // MIT License
 //
 // Copyright (c) 2021 Quentin Balland
-// Repository : https://github.com/FreeYourSoul/FyS
+// Repository : https://github.com/FreeYourSoul/FyD
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //         of this software and associated documentation files (the "Software"), to deal
@@ -38,18 +38,24 @@ public:
   ~free_data();
   free_data();
 
+  std::vector<subscription> retrieve_subscriptions(sub_type type);
+
+  //! get notification that has not been acknowledged yet
+  std::vector<notification> retrieve_pending_notifications();
+
+  //! acknowledge notifications (removing them from the pending list)
   void acknowledge_notifications(const std::vector<notification>& notifs);
-  notification retrieve_notifications();
-  subscription retrieve_subscriptions();
 
   void subscribe(const subscription& sub);
   void unsubscribe(const std::string& user);
 
+  //! run the notification checker daemon loop
+  [[noreturn]] void run(std::chrono::seconds refresh_delay);
+
 private:
   std::unique_ptr<internal> _impl;
-
 };
 
-}
+}// namespace fyd
 
 #endif//FYD_SRC_FREE_DATA_HH

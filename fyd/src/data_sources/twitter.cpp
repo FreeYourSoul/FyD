@@ -1,7 +1,7 @@
 // MIT License
 //
 // Copyright (c) 2021 Quentin Balland
-// Repository : https://github.com/FreeYourSoul/FyS
+// Repository : https://github.com/FreeYourSoul/FyD
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //         of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,26 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+#include <fmt/format.h>
+
 #include <data_sources/twitter.hh>
 
 namespace fyd::source {
 
+std::vector<notification> twitter::trigger_notifications() {
+  return std::vector<notification>();
 }
+
+std::string twitter::key_subscription_list() const {
+  return fmt::format(FMT_STRING("{}#twitter#"), key_subscriptions());
+}
+
+std::string twitter::key_subscription_user(const std::string& user) const {
+  return std::string();
+}
+
+std::string twitter::key_notification_list() const {
+    return fmt::format(FMT_STRING("{}#twitter#"), key_notifications());
+}
+
+}// namespace fyd::source

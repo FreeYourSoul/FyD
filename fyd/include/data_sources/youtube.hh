@@ -1,7 +1,7 @@
 // MIT License
 //
 // Copyright (c) 2021 Quentin Balland
-// Repository : https://github.com/FreeYourSoul/FyS
+// Repository : https://github.com/FreeYourSoul/FyD
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //         of this software and associated documentation files (the "Software"), to deal
@@ -33,22 +33,19 @@ namespace fyd::source {
 
 class youtube {
 
-  struct internal;
-
 public:
-  ~youtube();
-  youtube();
+  [[nodiscard]] std::vector<notification> trigger_notifications();
 
-  std::vector<notification> trigger_notifications();
-
-  [[nodiscard]] std::string key_subscription_list() const;
   [[nodiscard]] std::string key_subscription_user(const std::string& user) const;
+  [[nodiscard]] std::string key_subscription_list() const;
+  [[nodiscard]] std::string key_notification_list() const;
 
 private:
   std::chrono::system_clock last_timer;
-
 };
 
-}
+static_assert(fyd::check_requirement<youtube>::CORRECT);
+
+}// namespace fyd::source
 
 #endif//FYD_INCLUDE_DATA_SOURCES_YOUTUBE_SOURCE_HH

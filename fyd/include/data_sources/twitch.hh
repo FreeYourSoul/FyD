@@ -1,7 +1,7 @@
 // MIT License
 //
 // Copyright (c) 2021 Quentin Balland
-// Repository : https://github.com/FreeYourSoul/FyS
+// Repository : https://github.com/FreeYourSoul/FyD
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //         of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,23 @@
 #ifndef FYD_INCLUDE_DATA_SOURCES_TWITCH_HH
 #define FYD_INCLUDE_DATA_SOURCES_TWITCH_HH
 
+#include <string>
+
+#include <data_types.hh>
+
 namespace fyd::source {
 
 class twitch {
+public:
+  [[nodiscard]] std::vector<notification> trigger_notifications();
+
+  [[nodiscard]] std::string key_subscription_user(const std::string& user) const;
+  [[nodiscard]] std::string key_subscription_list() const;
+  [[nodiscard]] std::string key_notification_list() const;
 };
 
-}
+static_assert(fyd::check_requirement<twitch>::CORRECT);
+
+}// namespace fyd::source
 
 #endif//FYD_INCLUDE_DATA_SOURCES_TWITCH_HH

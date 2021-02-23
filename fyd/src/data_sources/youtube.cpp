@@ -1,7 +1,7 @@
 // MIT License
 //
 // Copyright (c) 2021 Quentin Balland
-// Repository : https://github.com/FreeYourSoul/FyS
+// Repository : https://github.com/FreeYourSoul/FyD
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //         of this software and associated documentation files (the "Software"), to deal
@@ -26,38 +26,38 @@
 
 #include <fmt/format.h>
 
-#include <data_types.hh>
 #include <data_sources/youtube.hh>
+#include <data_types.hh>
 
 constexpr auto YOUTUBE_URI = "https://socialblade.com/youtube";
 constexpr auto USER_NAME_POSTFIX = "user/{}/videos";
 
 constexpr auto REFRESH_NOTIF_RATE = std::chrono::seconds(10);
 
-namespace fyd::source {
-
 namespace {
+
 std::chrono::system_clock convert_to_clock(const std::string& str) {
   return {};
 }
-}
 
+}// namespace
 
-youtube::~youtube() = default;
-
-youtube::youtube() {
-}
+namespace fyd::source {
 
 std::vector<notification> youtube::trigger_notifications() {
   return {};
 }
 
 std::string youtube::key_subscription_list() const {
-  return fmt::format(FMT_STRING("{}#youtube"), key_subscriptions());
+  return fmt::format(FMT_STRING("{}#youtube#"), key_subscriptions());
 }
 
 std::string youtube::key_subscription_user(const std::string& user) const {
-  return fmt::format(FMT_STRING("{}#{}"), key_subscription_list(), user);
+  return fmt::format(FMT_STRING("{}{}"), key_subscription_list(), user);
 }
 
+std::string youtube::key_notification_list() const {
+  return fmt::format(FMT_STRING("{}#youtube#"), key_notifications());
 }
+
+}// namespace fyd::source

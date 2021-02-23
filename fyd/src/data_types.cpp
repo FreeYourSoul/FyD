@@ -21,26 +21,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <fmt/format.h>
+#include <data_types.hh>
 
-#include <data_sources/twitch.hh>
+namespace fyd {
 
-namespace fyd::source {
-
-std::vector<notification> twitch::trigger_notifications() {
-  return std::vector<notification>();
+std::string key_subscriptions() {
+	return "fyd#subscriptions";
 }
 
-std::string twitch::key_subscription_user(const std::string& user) const {
-  return std::string();
+std::string key_notifications() {
+  return "fyd#notifications";
 }
 
-std::string twitch::key_subscription_list() const {
-  return fmt::format(FMT_STRING("{}#twitch#"), key_subscriptions());
 }
-
-std::string twitch::key_notification_list() const {
-  return fmt::format(FMT_STRING("{}#twitch#"), key_notifications());
-}
-
-}// namespace fyd::source

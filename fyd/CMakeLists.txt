@@ -1,5 +1,6 @@
 add_library(fyd
         include/data_types.hh
+        src/data_types.cpp
         include/free_data.hh
         include/data_sources/youtube.hh
         src/data_sources/youtube.cpp

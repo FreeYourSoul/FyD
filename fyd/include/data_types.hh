@@ -1,7 +1,7 @@
 // MIT License
 //
 // Copyright (c) 2021 Quentin Balland
-// Repository : https://github.com/FreeYourSoul/FyS
+// Repository : https://github.com/FreeYourSoul/FyD
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 //         of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,39 @@
 #ifndef FYD_INCLUDE_DATA_TYPES_HH
 #define FYD_INCLUDE_DATA_TYPES_HH
 
+#include <string>
 #include <variant>
+#include <vector>
 
 namespace fyd {
+
+template<typename T>
+concept retrieve_data_source = requires(T a) {
+  {a.trigger_notifications()};
+
+  { a.key_notification_list() }
+  ->std::same_as<std::string>;
+
+  { a.key_subscription_list() }
+  ->std::same_as<std::string>;
+
+  { a.key_subscription_user(std::string()) }
+  ->std::same_as<std::string>;
+};
+
+/**
+ * Checker in order to ensure the data source object are following the proper requirements thanks to concept
+ */
+template<retrieve_data_source T>
+struct check_requirement {
+  static const bool CORRECT = true;
+};
 
 enum sub_type {
   YOUTUBE,
   TWITTER,
-  TWITCH
+  TWITCH,
+  ALL
 };
 
 struct subscription {
@@ -52,14 +77,15 @@ struct notification {
   sub_type type;
 };
 
-[[nodiscard]] std::string key_subscriptions() {
-  return "fyd#subscriptions";
-}
+[[nodiscard]] subscription deserialize_subscription(std::string_view content);
+[[nodiscard]] notification deserialize_notification(std::string_view content);
 
-[[nodiscard]] std::string key_notifications() {
-  return "fyd#notifications";
-}
+[[nodiscard]] std::string serialize(const subscription& subscription);
+[[nodiscard]] std::string serialize(const notification& notification);
 
-}
+[[nodiscard]] std::string key_subscriptions();
+[[nodiscard]] std::string key_notifications();
+
+}// namespace fyd
 
 #endif//FYD_INCLUDE_DATA_TYPES_HH
